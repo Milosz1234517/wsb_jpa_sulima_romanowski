@@ -4,6 +4,8 @@ import com.jpacourse.persistance.enums.TreatmentType;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "MEDICAL_TREATMENT")
 public class MedicalTreatmentEntity {
@@ -17,6 +19,18 @@ public class MedicalTreatmentEntity {
 
 	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
+
+	@ManyToOne(targetEntity = VisitEntity.class)
+	@JoinColumn(name = "visit_id", referencedColumnName = "id", nullable = false)
+	private VisitEntity visitEntity;
+
+	public VisitEntity getVisitEntity() {
+		return visitEntity;
+	}
+
+	public void setVisitEntity(VisitEntity visitEntity) {
+		this.visitEntity = visitEntity;
+	}
 
 	public Long getId() {
 		return id;
