@@ -33,11 +33,11 @@ public class DoctorEntity {
 	@Enumerated(EnumType.STRING)
 	private Specialization specialization;
 
-	@OneToOne(targetEntity = AddressEntity.class, cascade = CascadeType.REMOVE)
+	@OneToOne(targetEntity = AddressEntity.class, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
 	private AddressEntity addressEntity;
 
-	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "doctorEntity", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "doctorEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<VisitEntity> visitEntities;
 
 	public Collection<VisitEntity> getVisitEntities() {

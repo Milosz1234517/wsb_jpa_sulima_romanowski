@@ -20,7 +20,7 @@ public class MedicalTreatmentEntity {
 	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
 
-	@ManyToOne(targetEntity = VisitEntity.class)
+	@ManyToOne(targetEntity = VisitEntity.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "visit_id", referencedColumnName = "id", nullable = false)
 	private VisitEntity visitEntity;
 

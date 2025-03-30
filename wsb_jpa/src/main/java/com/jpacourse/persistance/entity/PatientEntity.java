@@ -30,7 +30,7 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
-	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "patientEntity", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "patientEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<VisitEntity> visitEntities;
 
 	public Collection<VisitEntity> getVisitEntities() {
@@ -41,7 +41,7 @@ public class PatientEntity {
 		this.visitEntities = visitEntities;
 	}
 
-	@OneToOne(targetEntity = AddressEntity.class, cascade = CascadeType.REMOVE)
+	@OneToOne(targetEntity = AddressEntity.class, cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
 	private AddressEntity addressEntity;
 

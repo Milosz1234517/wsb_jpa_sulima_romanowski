@@ -18,15 +18,15 @@ public class VisitEntity {
 	@Column(nullable = false)
 	private LocalDateTime time;
 
-	@ManyToOne(targetEntity = DoctorEntity.class)
+	@ManyToOne(targetEntity = DoctorEntity.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "doctor_id", referencedColumnName = "id", nullable = false)
 	private DoctorEntity doctorEntity;
 
-	@ManyToOne(targetEntity = PatientEntity.class)
+	@ManyToOne(targetEntity = PatientEntity.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
 	private PatientEntity patientEntity;
 
-	@OneToMany(targetEntity = MedicalTreatmentEntity.class, mappedBy = "visitEntity", cascade = CascadeType.REMOVE)
+	@OneToMany(targetEntity = MedicalTreatmentEntity.class, mappedBy = "visitEntity", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<MedicalTreatmentEntity> medicalTreatmentEntities;
 
 	public PatientEntity getPatientEntity() {
