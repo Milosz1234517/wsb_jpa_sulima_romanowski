@@ -27,10 +27,13 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private String patientNumber;
 
+	@Column(nullable = false, unique = true)
+	private Integer pesel;
+
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
-	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "patientEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "patientEntity", cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<VisitEntity> visitEntities;
 
 	public Collection<VisitEntity> getVisitEntities() {
@@ -51,6 +54,14 @@ public class PatientEntity {
 
 	public void setAddressEntity(AddressEntity addressEntity) {
 		this.addressEntity = addressEntity;
+	}
+
+	public Integer getPesel() {
+		return pesel;
+	}
+
+	public void setPesel(Integer pesel) {
+		this.pesel = pesel;
 	}
 
 	public Long getId() {

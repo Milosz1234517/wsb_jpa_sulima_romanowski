@@ -22,7 +22,7 @@ public class VisitTo {
 
     private DoctorTo doctorEntity;
 
-    private PatientTo patientEntity;
+//    private PatientTo patientEntity;
 
     private Collection<MedicalTreatmentTo> medicalTreatmentEntities;
 

@@ -16,6 +16,6 @@ public class MedicalTreatmentTo {
 
     private TreatmentType type;
 
-    private VisitTo visitEntity;
+//    private VisitTo visitEntity;
 
 }

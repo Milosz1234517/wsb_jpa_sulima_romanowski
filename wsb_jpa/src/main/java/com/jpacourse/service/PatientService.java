@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface PatientService
 {
     Optional<PatientTo> findById(final Long id);
+
+    void delete(final Long id);
 }

@@ -29,6 +29,6 @@ public class DoctorTo {
 
     private AddressTO addressEntity;
 
-    private Collection<VisitTo> visitEntities;
+//    private Collection<VisitTo> visitEntities;
 
 }

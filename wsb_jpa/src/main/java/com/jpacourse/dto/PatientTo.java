@@ -25,6 +25,8 @@ public class PatientTo {
 
     private String patientNumber;
 
+    private Integer pesel;
+
     private LocalDate dateOfBirth;
 
     private Collection<VisitTo> visitEntities;
