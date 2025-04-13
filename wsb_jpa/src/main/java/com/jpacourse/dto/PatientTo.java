@@ -31,5 +31,5 @@ public class PatientTo {
 
     private Collection<VisitTo> visitEntities;
 
-    private AddressEntity addressEntity;
+    private AddressTO addressEntity;
 }

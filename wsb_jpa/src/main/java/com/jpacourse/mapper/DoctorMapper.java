@@ -13,7 +13,20 @@ import javax.print.Doc;
 public final class DoctorMapper {
 
     public static DoctorTo mapToTo(DoctorEntity doctorEntity){
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(doctorEntity, DoctorTo.class);
+//        ModelMapper modelMapper = new ModelMapper();
+//        return modelMapper.map(doctorEntity, DoctorTo.class);
+
+          if (doctorEntity == null) return null;
+
+          DoctorTo doctorTo = new DoctorTo();
+          doctorTo.setDoctorNumber(doctorEntity.getDoctorNumber());
+          doctorTo.setId(doctorEntity.getId());
+          doctorTo.setEmail(doctorEntity.getEmail());
+          doctorTo.setSpecialization(doctorEntity.getSpecialization());
+          doctorTo.setFirstName(doctorEntity.getFirstName());
+          doctorTo.setLastName(doctorEntity.getLastName());
+          doctorTo.setTelephoneNumber(doctorEntity.getTelephoneNumber());
+          doctorTo.setAddressEntity(AddressMapper.mapToTO(doctorEntity.getAddressEntity()));
+          return doctorTo;
     }
 }
