@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,5 +92,24 @@ public class PatientServiceTest {
         Assertions.assertEquals(email, patientTo.getEmail());
         Assertions.assertEquals(patientNumber, patientTo.getPatientNumber());
         Assertions.assertEquals(dateOfBirth, patientTo.getDateOfBirth());
+    }
+
+    @Transactional
+    @Test
+    public void testFindPatientVisits() {
+        // GIVEN
+        Long patientId = 1L;
+        Long visitId = 1L;
+        VisitEntity visit = visitDao.findOne(visitId);
+        PatientEntity patient = patientDao.findOne(patientId);
+
+        // WHEN
+        List<VisitTo> visitEntities = patientService.findVisitsByPatientID(patientId);
+
+        // THEN
+        Assertions.assertEquals(visitEntities.size(), 1);
+        Assertions.assertEquals(visitEntities.get(0).getId(), visit.getId());
+        Assertions.assertEquals(visitEntities.get(0).getTime(), visit.getTime());
+        Assertions.assertEquals(visitEntities.get(0).getDescription(), visit.getDescription());
     }
 }

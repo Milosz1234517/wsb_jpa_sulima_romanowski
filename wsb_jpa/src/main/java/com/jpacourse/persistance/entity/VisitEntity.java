@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "VISIT")

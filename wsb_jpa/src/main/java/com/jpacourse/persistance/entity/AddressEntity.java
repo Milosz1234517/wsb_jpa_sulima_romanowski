@@ -20,6 +20,17 @@ public class AddressEntity {
 	@Column(nullable = false)
 	private String postalCode;
 
+	@Version
+	private Long version;
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	public Long getId() {
 		return id;
 	}

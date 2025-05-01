@@ -4,9 +4,11 @@ import com.jpacourse.persistance.entity.AddressEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class AddressDaoTest
@@ -24,6 +26,7 @@ public class AddressDaoTest
         assertThat(addressEntity).isNotNull();
         assertThat(addressEntity.getPostalCode()).isEqualTo("60-400");
     }
+
 
     @Transactional
     @Test
@@ -66,6 +69,36 @@ public class AddressDaoTest
         // then
         final AddressEntity removed = addressDao.findOne(saved.getId());
         assertThat(removed).isNull();
+    }
+
+    @Test
+    public void testAddressModify() {
+
+        //GIVEN
+        Long addressId = 1L;
+
+        String city1 = "1";
+        String city2 = "2";
+
+        AddressEntity address1 = addressDao.findOne(addressId);
+        AddressEntity address2 = addressDao.findOne(addressId);
+
+        address1.setCity(city1);
+        address2.setCity(city2);
+
+        // WHEN, THEN
+        addressDao.update(address1);
+
+        AddressEntity addressEntityV1Updated = addressDao.findOne(addressId);
+
+        assertThat(addressEntityV1Updated.getCity()).isEqualTo(city1);
+        assertThat(addressEntityV1Updated.getVersion()).isEqualTo(address1.getVersion() + 1);
+
+        assertThrows(ObjectOptimisticLockingFailureException.class, () -> {
+            addressDao.update(address2);
+        });
+
+        assertThat(addressDao.findOne(addressId).getCity()).isEqualTo(city1);
     }
 
 

@@ -65,7 +65,7 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
     }
 
     @Override
-    public List<VisitEntity> findVisitsByPstientID(Long patientID) {
+    public List<VisitEntity> findVisitsByPatientID(Long patientID) {
         return entityManager.createQuery(
                         """
                            SELECT visits
@@ -78,12 +78,29 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
     }
 
     @Override
-    public List<PatientEntity> findPatientsByVisitNumner(Integer visitNumner) {
-        return null;
+    public List<PatientEntity> findPatientsByVisitNumber(Integer visitNumber) {
+        return entityManager.createQuery(
+                        """
+                           SELECT patient
+                             FROM VisitEntity visit
+                             JOIN visit.patientEntity patient
+                            GROUP BY patient
+                            HAVING count( visit.id ) > :param1
+                           """, PatientEntity.class
+                ).setParameter("param1", visitNumber)
+                .getResultStream().toList();
     }
 
     @Override
     public List<PatientEntity> findPatientsByPeselRange(Integer peselMin, Integer peselMax) {
-        return null;
+        return entityManager.createQuery(
+                        """
+                           SELECT patient
+                             FROM PatientEntity patient
+                            WHERE patient.pesel BETWEEN :param1 AND :param2
+                           """, PatientEntity.class
+                ).setParameter("param1", peselMin)
+                .setParameter("param2", peselMax)
+                .getResultStream().toList();
     }
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "PATIENT")
@@ -33,7 +35,8 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
-	@OneToMany(targetEntity = VisitEntity.class, mappedBy = "patientEntity", cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+	@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = VisitEntity.class, mappedBy = "patientEntity", cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<VisitEntity> visitEntities;
 
 	public Collection<VisitEntity> getVisitEntities() {

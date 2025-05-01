@@ -14,9 +14,9 @@ public interface PatientDao extends Dao<PatientEntity, Long>
 
     List<PatientEntity> findPatientsByLastName(String lastName);
 
-    List<VisitEntity> findVisitsByPstientID(Long patientID);
+    List<VisitEntity> findVisitsByPatientID(Long patientID);
 
-    List<PatientEntity> findPatientsByVisitNumner(Integer visitNumner);
+    List<PatientEntity> findPatientsByVisitNumber(Integer visitNumber);
 
     List<PatientEntity> findPatientsByPeselRange(Integer peselMin, Integer peselMax);
 }

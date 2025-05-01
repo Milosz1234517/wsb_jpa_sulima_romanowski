@@ -26,4 +26,16 @@ Nastepnie zmien adnotacje na
 
 i powtorz test i obserwacje. Wnioski zapisz na dole tego pliku i skomituj.
 
+Gdy ustawione zostanie @Fetch(FetchMode.SELECT), wówczas wykonywany jest osobny select do tabeli z wizytami
+
+Np. dla pacjenta z id = 4:
+
+Hibernate: select pe1_0.id,pe1_0.address_id,ae1_0.id,ae1_0.address_line1,ae1_0.address_line2,ae1_0.city,ae1_0.postal_code,pe1_0.date_of_birth,pe1_0.email,pe1_0.first_name,pe1_0.last_name,pe1_0.patient_number,pe1_0.pesel,pe1_0.telephone_number from patient pe1_0 join address ae1_0 on ae1_0.id=pe1_0.address_id where pe1_0.id=?
+
+Hibernate: select ve1_0.patient_id,ve1_0.id,ve1_0.description,ve1_0.doctor_id,de1_0.id,de1_0.address_id,ae1_0.id,ae1_0.address_line1,ae1_0.address_line2,ae1_0.city,ae1_0.postal_code,de1_0.doctor_number,de1_0.email,de1_0.first_name,de1_0.last_name,de1_0.specialization,de1_0.telephone_number,ve1_0.time from visit ve1_0 left join doctor de1_0 on de1_0.id=ve1_0.doctor_id left join address ae1_0 on ae1_0.id=de1_0.address_id where ve1_0.patient_id=?
+
+Natomiast w momencie ustawienia @Fetch(FetchMode.JOIN) tworzone jest jedno zapytanie z użyciem klauzuli join:
+
+Hibernate: select pe1_0.id,pe1_0.address_id,ae1_0.id,ae1_0.address_line1,ae1_0.address_line2,ae1_0.city,ae1_0.postal_code,pe1_0.date_of_birth,pe1_0.email,pe1_0.first_name,pe1_0.last_name,pe1_0.patient_number,pe1_0.pesel,pe1_0.telephone_number,ve1_0.patient_id,ve1_0.id,ve1_0.description,ve1_0.doctor_id,de1_0.id,de1_0.address_id,ae2_0.id,ae2_0.address_line1,ae2_0.address_line2,ae2_0.city,ae2_0.postal_code,de1_0.doctor_number,de1_0.email,de1_0.first_name,de1_0.last_name,de1_0.specialization,de1_0.telephone_number,ve1_0.time from patient pe1_0 join address ae1_0 on ae1_0.id=pe1_0.address_id left join visit ve1_0 on pe1_0.id=ve1_0.patient_id left join doctor de1_0 on de1_0.id=ve1_0.doctor_id left join address ae2_0 on ae2_0.id=de1_0.address_id where pe1_0.id=?
+
 Do wybranej encji dodaj wersjonowanie, oraz napisz test (w DAO) sprawdzajacy rownolegla modyfikacje (OptimisticLock)
